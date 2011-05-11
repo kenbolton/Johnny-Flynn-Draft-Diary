@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block head_title %}{{ flatpage.title }}{% endblock %}
+
+{% block main %}
+<section id="flat">
+{{ flatpage.content|safe }}
+</section>
+<a id="levis" href="http://www.levis.com/" target="_blank" style="float:right;"><h1>LEVIS.COM</h1></a>
+
+{% endblock %}
+{% block ad600x160 %}
+{% endblock %}

@@ -1,0 +1,7 @@
+<ul>
+{% for object in cat %}
+	<li>
+		<a href="{{ object.get_absolute_url }}">{{ object.title }}</a> ({{ object.videos.count }} post{{ object.videos.count|pluralize }})
+	</li>
+{% endfor %}
+</ul>

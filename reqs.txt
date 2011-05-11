@@ -1,0 +1,19 @@
+docutils==0.5
+django-pagination==1.0.5
+django-oembed==0.1.0
+django-threadedcomments==0.5.1
+django-photologue==2.2
+django-extensions==0.4.1
+django-tinymce==1.5
+django-db-log==1.0.1
+
+http://dist.repoze.org/PIL-1.1.6.tar.gz
+
+-e svn+http://django-filebrowser.googlecode.com/svn/trunk#egg=django-filebrowser
+-e svn+http://code.djangoproject.com/svn/django/trunk#egg=Django
+-e svn+http://django-tagging.googlecode.com/svn/trunk#egg=Django-Tagging
+ 
+# -e hg+http://bitbucket.org/fivethreeo/django-videologue/#egg=Django-Videologue
+# Bah! The setup.py files are malformed, missing a closing 
+# parenthesis at the end, line 53. Will fork my own branch 
+# or submit a patch. In the meantime, use Ken's version.

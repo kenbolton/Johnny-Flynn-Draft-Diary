@@ -1,0 +1,101 @@
+<div style="width:640px;height:377px;" id="player"></div>
+
+<script language="Javascript"><!--
+$(function() {		
+	
+	// email and embed tab actions
+	$("#panes + #sharebar a").click(function(e)  { 
+		$f().hide(true);  
+		
+		// toggle tab class
+		var tab = $(this); 
+		$("#sharebar a").removeClass("current");
+		tab.addClass("current");
+		
+		// show / hide panes
+		$(tab.attr("href")).show();
+		var other = (tab.attr("href") == "#email") ? $("#embed") : $("#email");
+		other.hide();		
+		
+		// prevent link's default behaviour
+		return e.preventDefault();
+	});
+	
+	// close buttons
+	$("#panes div.close").click(function() {
+		$("#sharebar a").removeClass("current");
+		$("#email, #embed").hide();
+		$f().show();
+	});
+});
+// setup player 
+$(function() {
+	$f("player", "{{ MEDIA_URL }}swf/flowplayer.commercial-3.1.1.swf", {
+		key: '$0121eb8742737ce73e0',
+		// properties that are common to both clips in the playlist
+		clip: {
+			baseUrl: ''
+		},
+		// playlist with multiple entries
+		playlist: [	
+			{% if ad %}
+			// user is forced to see this ad. pause action and scrub are disabled
+			{
+				url: '{{ ad.flv_video.url }}',
+				duration: {{ ad.duration }},
+				// disable seek
+				onBeforeSeek: function() {
+					return false;
+				},
+				// when this event returns false - player's default behaviour is disabled
+			 	onBeforePause: function() {
+					return false;
+				},
+				// track start event for this clip  
+				onStart: function() {
+					pageTracker._trackEvent("Ads", "Play", "{{ ad.title }}");
+	//				this.getControls().hide();
+				},
+				// track pause event for this clip. time (in seconds) is also tracked       
+				onPause: function() {            
+					pageTracker._trackEvent("Ads", "Pause", "{{ ad.title }}", parseInt(this.getTime()));        
+				},                
+				// track stop event for this clip. time is also tracked        
+				onStop: function() {            
+					pageTracker._trackEvent("Ads", "Stop", "{{ ad.title }}", parseInt(this.getTime()));
+				},                
+				// track finish event for this clip        
+				onFinish: function() {
+					pageTracker._trackEvent("Ads", "Finish", "{{ ad.title }}");
+				},
+			},
+			{% endif %}
+			// this is the actual video. controlbar is shown
+			{
+				url: '{{ object.h264_video.url }}',
+				duration: {{ object.duration }},
+				// when playback finishes player is resumed back to it's original splash image state
+				onStart: function() {
+					pageTracker._trackEvent("Posts", "Play", "{{ object.title }}");
+					tracking_pixel_start= new Image(1,1); 
+					tracking_pixel_start.src="http://view.atdmt.com/action/2009_Dime_Video_{{ object.id }}_Start";
+				},
+				// track pause event for this clip. time (in seconds) is also tracked       
+				onPause: function() {            
+					pageTracker._trackEvent("Posts", "Pause", "{{ object.title }}", parseInt(this.getTime()));        
+				},               
+				// track finish event for this clip        
+				onFinish: function() {
+					pageTracker._trackEvent("Posts", "Finish", "{{ object.title }}");
+					tracking_pixel_end= new Image(1,1); 
+					tracking_pixel_end.src="http://view.atdmt.com/action/2009_Dime_Video_{{ object.id }}_End";
+					this.unload();
+				}
+			}
+		]}
+	);	
+});
+$(function() {
+	$("#embed textarea").html($f().embed().getEmbedCode());	
+});
+--></script>

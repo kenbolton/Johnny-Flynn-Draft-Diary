@@ -1,0 +1,24 @@
+{% load threadedcommentstags %}
+
+        {% get_threaded_comment_tree for object as tree %}
+        {% get_threaded_comment_form as form %}
+    {% if tree %}
+    <h2>Comments</h2>
+    {% for comment in tree %}
+        <div style="margin-left: {{ comment.depth }}em;" class="comment">
+            Posted by <strong>{{ comment.user }}</strong><br/>
+            {{ comment.date_submitted|date:"m/d/y g:ma" }}<br />
+            {% auto_transform_markup comment %}<br />
+            <a id="c{{ comment.id }}" href="javascript:show_reply_form('c{{ comment.id }}','{% get_comment_url object comment %}','{{ comment.name }}')">Reply</a>    
+        </div>
+	{% endfor %}
+	<p class="{{ division.slug }} bottomborder"></p>
+	{% endif %}
+    <h2>Reply</h2>
+    <form method="POST" action="{% get_comment_url object %}">
+        <ul>
+            {% get_threaded_comment_form as form %}
+            {{ form.as_ul }}
+            <li><input type="submit" value="Submit Comment" /></li>
+        </ul>
+    </form>

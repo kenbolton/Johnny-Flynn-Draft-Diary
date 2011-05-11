@@ -1,0 +1,26 @@
+{% load threadedcommentstags %}
+<div id="comments">
+    <h2><span>Comments</span></h2>
+    	{% get_free_threaded_comment_tree for object as tree %}
+    {% if tree %}
+    <ul>
+    {% for comment in tree %}
+        <li class="response {% cycle 'white' 'shaded' %} clearfix{% if forloop.last %} last{% else %}{% endif %}">
+            Posted by <strong>{% if comment.website %}<a href="{{ comment.website }}" target="_blank">{{ comment.name }}</a>{% else %}{{ comment.name }}{% endif %}</strong><br/>
+            {{ comment.date_submitted|date:"g:m a F j, Y" }}<br />
+            {% auto_transform_markup comment %}<br />
+        </li>
+	{% endfor %}
+    </ul>
+	{% endif %}
+	{% if object.allow_comments %}
+    <form method="POST" action="{% get_free_comment_url object %}">
+            {% get_free_threaded_comment_form as form %}
+			<p>{{ form.name }}<label for="id_name">Name</label></p>
+			<p>{{ form.website }}<label for="id_website">Site</label></p>
+			<p>{{ form.email }}<label for="id_email">Email</label></p>
+            <p>{{ form.comment }}</p>
+			<p><input type="submit" value="Submit Comment" /></p>
+    </form>
+    {% endif %}
+</div>

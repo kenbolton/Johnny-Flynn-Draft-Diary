@@ -1,0 +1,30 @@
+{% extends "videodiary/root.html" %}
+
+{% load i18n %}
+{% load photologue_tags %}
+
+{% block content %}
+{% if object %}
+{% if object.oembed %}
+{% load oembed_tags %}
+{% oembed %}{{ object.oembed }}{% endoembed %}
+{% else %}
+{% include "videodiary/inc_home_player.html" %}
+{% include "videodiary/inc_share_bar.html" %}
+{% endif %}
+	<section id="video_info">
+		<h2>{{ object.title|title }}</h2>
+		{% if object.caption %}{{ object.caption|safe }}{% endif %}
+		<h5 class="post_date">Posted {{ object.date_added|date:"g:m a F j, Y" }} in:</h5>
+		<h5 class="post_category">{% for category in object.public_galleries.all %}
+			<a href="{{ category.get_absolute_url }}">{{ category.title|title }}</a>{% if forloop.last %}.{% else %}, {% endif %}
+    		{% endfor %}</h5>
+	</section>
+{% include "comments/comments.html" %}
+{% else %}
+<h4>Nothing to see here yet.</h4>
+<div id="comments">
+</div>
+
+{% endif %}
+{% endblock %}

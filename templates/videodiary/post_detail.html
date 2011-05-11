@@ -1,0 +1,32 @@
+{% extends "videodiary/root.html" %}
+
+{% load i18n %}
+
+{% load photologue_tags %}
+
+{% block title %}{{ object.title }}{% endblock %}
+
+{% block content %}
+{% if object.oembed %}
+<style>#panes{height:360px;}</style>
+{% load oembed_tags %}
+{% oembed %}
+<div style="width:640px;height:360px;" id="player">
+{% oembed 640x360 %}{{ object.oembed }}{% endoembed %}
+</div>
+{% include "videodiary/inc_oembed_share_bar.html" %}
+{% endoembed %}
+{% else %}
+{% include "videodiary/inc_post_player.html" %}
+{% include "videodiary/inc_share_bar.html" %}
+{% endif %}
+	<section id="video_info">
+		<h2>{{ object.title|title }}</h2>
+		{% if object.caption %}{{ object.caption|safe }}{% endif %}
+		<h5 class="post_date">Posted {{ object.date_added|date:"g:m a F j, Y" }}{% if object.public_galleries.count %} in:{% endif %}</h5>
+		<h5 class="post_category">{% for category in object.public_galleries.all %}
+			<a href="{{ category.get_absolute_url }}">{{ category.title|title }}</a>{% if forloop.last %}.{% else %}, {% endif %}
+    		{% endfor %}</h5>
+	</section>
+{% include "comments/comments.html" %}
+{% endblock %}

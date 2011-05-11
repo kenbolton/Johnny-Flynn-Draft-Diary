@@ -1,0 +1,53 @@
+<script type="text/javascript">
+    $(function()
+    {
+        $('.custom_button, .hover_menu').mouseenter(function()
+        {
+            $('.hover_menu').fadeIn('fast');
+            $('.custom_button').addClass('active');
+            $(this).data('in', true);
+            $('.hover_menu').data('hidden', false);
+        }).mouseleave(function()
+        {
+            $(this).data('in', false);
+            setTimeout(hideMenu, delay);
+        });
+
+        var delay = 400;
+        function hideMenu()
+        {
+            if (!$('.custom_button').data('in') && !$('.hover_menu').data('in') && !$('.hover_menu').data('hidden'))
+            {
+                $('.hover_menu').fadeOut('fast');
+                $('.custom_button').removeClass('active');
+                $('.hover_menu').data('hidden', true);
+            }
+        }
+    });
+</script>
+
+<div class="addthis_toolbox">
+    <div class="custom_hover">
+        <span class="custom_button">+Share</span>
+    </div>
+    <div class="hover_menu">
+        <div class="column1">
+            <a class="addthis_button_email">Email</a>
+        	<a class="addthis_button_ballhype">Ballhype</a>
+        	<a class="addthis_button_yardbarker">Yardbarker</a>
+            <a class="addthis_button_twitter">Twitter</a>
+            <a class="addthis_button_facebook">Facebook</a>
+        </div>
+        <div class="column2">
+            <a class="addthis_button_myspace">MySpace</a>
+            <a class="addthis_button_delicious">Delicous</a>
+            <a class="addthis_button_stumbleupon">Stumble</a>
+            <a class="addthis_button_digg">Digg</a>
+            <a class="addthis_button_print">Print</a>
+        </div>
+        <div class="clear"></div>
+        <div class="more">
+            <a class="addthis_button_expanded">More Destinations...</a>
+        </div>
+    </div>
+</div>

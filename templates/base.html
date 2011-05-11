@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>{% if site_name %}{{ site_name }} : {% endif %}{% block head_title %}Jonny Flynn Draft Diary Presented By Levi's{% endblock %}</title>
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="/feeds/latest/" />
+
+<!--[if IE]>
+	<script src="{{ MEDIA_URL }}js/html5.js" type="text/javascript"></script>
+	<style>
+		div {
+		zoom: 1; /* trigger hasLayout */
+		}
+		ul#share {
+		  border-left: 2px solid #666;
+		  border-right: 2px solid #666;
+		}
+	</style>
+<![endif]-->
+<!--[if lt IE 8 ]>
+  	<link rel="stylesheet" href="{{ MEDIA_URL }}css/blueprint/ie.css" type="text/css" media="screen, projection">
+<![endif]-->
+    <link rel="stylesheet" href="{{ MEDIA_URL }}css/blueprint/screen.css" media="screen, projection" />
+    <link rel="stylesheet" href="{{ MEDIA_URL }}css/blueprint/print.css" media="print" />
+    <link rel="stylesheet" href="{{ MEDIA_URL }}css/base.css" media="screen, projection" />
+    <script src="{{ MEDIA_URL }}js/jquery.min.js" type="text/javascript"></script>
+    <script src="{{ MEDIA_URL }}js/flowplayer-3.1.1.min.js" type="text/javascript"></script>
+    <script src="{{ MEDIA_URL }}js/flowplayer.embed-3.0.2.min.js" type="text/javascript"></script>
+<!--    <script type="text/javascript">var addthis_pub = "kenbolton";</script>-->
+
+{% comment %}
+{% load compressed %}
+{% compressed_css 'group_one' %}
+{% compressed_js 'all' %}
+{% endcomment %}
+
+
+	<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js"></script>
+       {% block extra_head_base %}
+           {% block extra_head %}{% endblock %}
+       {% endblock %}
+</head>
+<body>
+<div id="container">
+	<section id="masthead">
+		<nav id="sponsorNav">
+			<ul>
+				<li><a href="http://www.levis.com/" target="_blank">LEVIS.COM</a></li>
+				<li><a href="http://www.dimemag.com/" target="_blank">DIMEMAG.COM</a></li>
+			</ul>
+		</nav>
+		<nav>
+			<a id="home" href="{% url home %}">
+				<h1>Jonny Flynn Draft Diary, Presented by Levi's</h1>
+			</a>
+		</nav>
+		{% block ad728x90 %}
+		<section id="ad728x90">
+			{% include "includes/ad728x90.html" %}
+		</section>
+		{% endblock %}
+		<nav id="mastNav">{% block navigation_base %}
+			<ul>
+			{% load homepage %}
+				{% nav %}
+				<li><a href="/about/jonnyflynn/">About Jonny Flynn</a></li>
+			</ul>
+			{% block navigation %}{% endblock %}
+		{% endblock %}
+		</nav>
+	</section>
+	<section id="sidebar">
+		{% block ad300x250 %}
+		<section id="ad300x250">
+			{% include "includes/ad300x250.html" %}
+		</section>
+		{% endblock %}
+		{% block sidebar_base %}
+		{% if latest %}
+		<nav id="recent-videos">
+	    	<h2>
+				<span>
+				{% block sidebar_header %}
+					RECENT VIDEOS{% endblock %}
+				</span>
+			</h2>
+			<ul>
+			{% for video in latest %}
+    			<li>
+    				<a href="{{ video.get_absolute_url }}">
+    				{% if video.oembed %}
+    					<img src="{{ MEDIA_URL }}photologue/photos/cache/draft-diary-interview_thumbnail.png" alt="{{ video.title }}"/>
+    				{% else %}
+    					<img src="{{ video.get_thumbnail_url }}" alt="{{ video.title }}"/>
+    				{% endif %}
+    					<h3>{{ video.title|title }}</h3>
+    				</a>
+    				{% comment %}<p>
+    			{% for category in video.public_galleries.all %}
+    				<a href="{% url category category.title_slug %}">{{ category.title|title }}</a>{% if forloop.last %}{% else %}, {% endif %}
+    			{% endfor %}
+    				</p>{% endcomment %}
+    			</li>
+   			{% endfor %}
+   			</ul>
+  		</nav>
+  		{% endif %}
+		{% comment %}<nav id="more-videos">
+	    	<h2>
+				<span>
+					MORE VIDEOS
+				</span>
+			</h2>
+		{% block sidebar %}{% cat %}{% endblock %}
+		</nav>{% endcomment %}
+		{% endblock %}
+	</section>
+	<section id="main">
+	{% block main %}
+		<article id="video"><div id="panes">{% block content_base %}
+			{% block content %}{% endblock %}
+		{% endblock %}
+		</article>
+		<section id="main_right_column">
+		{% block ad600x160 %}
+		<section id="ad600x160">
+			{% include "includes/ad600x160.html" %}
+		</section>
+		{% endblock %}
+		
+		<a id="levis" href="http://www.levis.com/" target="_blank"><h1>LEVIS.COM</h1></a>
+		</section>
+	{% endblock %}
+	</section>
+	<footer>{% block footer %}
+	{% endblock %}
+	</footer>
+	<address>{% block address %}
+	{% endblock %}
+	</address>
+	<div style="margin: 12px 0pt 24px 180px; text-align: left; clear: left;"><a href="http://www.complexmedianetwork.com" target="_blank" title="complexmedianetwork.com" style="margin: 0pt 0px 0pt -150px; font-weight: bold; color: rgb(0, 0, 0);"><span style="color:#ff0000;">COMPLEX</span>MediaNetwork</a> <a href="http://www.12ozprophet.com"  target="_blank" title="12ozprophet.com">12ozProphet</a> | <a href="http://www.bouncemag.com" target="_blank" title="BounceMag.com">BounceMag</a> | <a href="http://www.complex.com" target="_blank" title="complex.com">Complex</a>  |  <a href="http://www.complexvideo.com" target="_blank" title="ComplexVideo.com">ComplexVideo</a>  |  <a href="http://www.dailydrop.com" target="_blank"  title="dailydrop.com">DailyDrop</a> | <a href="http://www.dasgamer.com" target="_blank" title="dasgamer.com">DasGamer</a> | | <a href="http://www.dimemag.com" target="_blank" title="DimeMag.com">DimeMag</a> | <a href="http://www.dimemag.tv" target="_blank" title="DimeMag.TV">DimeTV</a> | <a href="http://www.freshnessmag.com" target="_blank" title="freshnessmag.com">FreshnessMag</a> | <a href="http://www.highsnobiety.com" target="_blank" title="HighSnobiety.com">HighSnobiety</a> | <a href="http://www.illroots.com" target="_blank" title="illRoots.com">illRoots</a> | <a href="http://www.japanesesportcars.com" target="_blank" title="JapaneseSportCars.com">JapaneseSportCars</a> | <a href="http://www.juxtapoz.com" target="_blank" title="Juxtapoz.com">Juxtapoz</a> | <a href="http://www.karmaloop.com" target="_blank"  title="karmaloop.com">Karmaloop</a> | <a href="http://www.Karmalooptv.com" target="_blank"  title="Karmalooptv.com">KarmaloopTV</a> | <a href="http://www.kicksfinder.com" target="_blank" title="KicksFinder.com">KicksFinder</a> | <a href="http://www.Kicksonfire.com" target="_blank" title="Kicksonfire.com">KicksOnFire</a> | <a href="http://www.loud.com" target="_blank" title="Loud.com">Loud</a> | <a href="http://www.missinfo.tv"  target="_blank" title="MissInfo.tv">MissInfo</a> | <a href="http://www.moejackson.com"  target="_blank" title="MoeJackson.com">MoeJackson</a> | <a href="http://www.NahRight.com"  target="_blank" title="NahRight.com">NahRight</a> | <a href="http://www.NiceKicks.com" target="_blank"   title="NiceKicks.com">NiceKicks</a> | <a href="http://www.oliviamunn.com"  target="_blank" title="OliviaMunn.com">OliviaMunn</a> | <a href="http://www.OnSMASH.com"  target="_blank" title="OnSMASH.com">OnSMASH</a> | <a href="http://www.pastapadre.com"  target="_blank" title="pastapadre.com">Pastapadre</a> | <a href="http://www.planetxbox360.com" target="_blank" title="planetxbox360.com">PlanetXbox360</a> | <a href="http://www.sarcasticgamer.com" target="_blank"  title="sarcasticgamer.com">Sarcasticgamer</a> | <a href="http://www.SlamxHype.com" target="_blank"  title="SlamxHype.com">SlamxHype</a> | <a href="http://www.sneakernews.com" target="_blank"  title="SneakerNews.com">SneakerNews</a> | <a href="http://www.sneakerfreaker.com" target="_blank"  title="SneakerFreaker.com">SneakerFreaker</a> | <a href="http://www.Streetball.com" target="_blank"  title="Streetball.com">Streetball</a> | <a href="http://www.facebook.com/apps/application.php?id=10334449866&ref=s" target="_blank" title="vdream" rel="nofollow">Vdream</a> | <a href="http://www.vladtv.com" target="_blank" title="vladtv.com">VladTV</a></div>
+	<!-- Start Quantcast tag -->
+	<script type="text/javascript" src="http://edge.quantserve.com/quant.js"></script>
+	<script type="text/javascript">_qacct="p-a0gOdUACucKCE";quantserve();</script>
+	<noscript>
+	<a href="http://www.quantcast.com/p-a0gOdUACucKCE" target="_blank"><img src="http://pixel.quantserve.com/pixel/p-a0gOdUACucKCE.gif" style="display: none;" border="0" height="1" width="1" alt="Quantcast"/></a>
+	</noscript>
+	<!-- End Quantcast tag -->
+</div>
+	<script type="text/javascript">
+		var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+		document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+	</script>
+	<script type="text/javascript">
+		try {
+		var pageTracker = _gat._getTracker("UA-9120128-2");
+		pageTracker._trackPageview();
+		} catch(err) {}</script>
+{% block takeover %}	
+<!-- ===   CHANNELS TAKEOVER   === -->
+<script language="JavaScript" type="text/javascript">
+ord=Math.random()*10000000000000000;
+zone='channels';
+document.write('<script language="JavaScript" src="http://cdn.complexmedianetwork.com/cdn/complex.com/takeovers/JS/generic.js?'+ ord +'" type="text/javascript"><\/script><script language="JavaScript" src="http://cdn.complexmedianetwork.com/cdn/complex.com/takeovers/JS/cmn_dimemagtv.js?'+ zone +'&'+ ord +'" type="text/javascript"><\/script>');</script>
+{% endblock %}
+</body>
+</html>

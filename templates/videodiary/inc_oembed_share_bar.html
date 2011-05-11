@@ -1,0 +1,31 @@
+{% load videodiary_tags %}
+	<!-- embed -->
+	<div id="embed">
+	
+		
+		<h2>Embed this video</h2>
+
+		<p>
+			<label>
+				Copy the code below and paste it into your website.
+			</label>
+		</p>		
+				<textarea onFocus="this.select()"></textarea>
+		<div class="close">close</div>
+			
+	</div>
+</div>
+<ul id="sharebar">
+	<li style="color:#666;">Embed</li>
+</ul>
+<script>
+function trackDownload() {
+	tracking_pixel = new Image(1,1); 
+	tracking_pixel.src = "http://view.atdmt.com/action/2009_Dime_Video_Podcast_Download_{{ object.id }}";
+}
+</script>
+<ul id="shares">
+	<li style="color:#666;">Download</li>
+	<li><a href="/feeds/latest/">Subscribe to Podcast</a></li>
+	<li>{% add_this object.get_absolute_url object.title %}</li>
+</ul>
